@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginAdminController;
+use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,7 +25,9 @@ Route::prefix('admin')->group(function () {
     Route::post('/', [LoginAdminController::class, 'postLoginAdmin'])->name('postLoginAdmin');
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-    Route::prefix('menu')->group(function () {
-         
+    Route::prefix('product')->group(function () {
+         Route::get('add', [ProductController::class, 'create'])->name('getAddProduct');
+         Route::post('add', [ProductController::class, 'store'])->name('postAddProduct');
+         Route::get('list', [ProductController::class, 'index'])->name('getListProduct');
     });
 });
