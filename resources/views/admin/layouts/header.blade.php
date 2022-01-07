@@ -10,13 +10,7 @@
                     <img src="{{asset('gentelella-alela/production/images/img.jpg')}}" alt="">{{Str::title(auth()->user()->name)}}
                     </a>
                     <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item"  href="javascript:;"> Profile</a>
-                        <a class="dropdown-item"  href="javascript:;">
-                        <span class="badge bg-red pull-right">50%</span>
-                        <span>Settings</span>
-                        </a>
-                        <a class="dropdown-item"  href="javascript:;">Help</a>
-                        <a class="dropdown-item"  href="login.html"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
+                        <a class="dropdown-item"  href="{{route('logoutAdmin')}}"><i class="fa fa-sign-out pull-right"></i> Đăng xuất</a>
                     </div>
                 </li>
                 <li role="presentation" class="nav-item dropdown open">

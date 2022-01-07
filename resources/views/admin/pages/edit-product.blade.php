@@ -22,7 +22,7 @@
             <div class="col-md-12 ">
                 <div class="x_panel">
                     <div class="x_title">
-                        <h2>Thêm món ăn</h2>
+                        <h2>Sửa món ăn</h2>
                         <div class="clearfix"></div>
                         @if (session('message'))
                             <p class="alert alert-success text-center col-3 m-auto">{{session('message')}}</p>
@@ -31,32 +31,34 @@
                     </div>
                     <div class="x_content">
                         <br />
-                        <form class="form-horizontal form-label-left" action="{{route('product.store')}}" method="POST" enctype="multipart/form-data">
+                        <form action="{{route('product.update', $product->id)}}" class="form-horizontal form-label-left" action="" method="POST" enctype="multipart/form-data">
                             @csrf
+                            @method('PUT')
                             <div class="form-group row">
                                 <label class="control-label col-md-3 col-sm-3 ">Tên</label>
                                 <div class="col-md-9 col-sm-9 ">
-                                    <input type="text" name="name" id="autocomplete-custom-append" class="form-control col-md-10" placeholder="Tên món ăn"/>
+                                    <input type="text" name="name" id="autocomplete-custom-append" value="{{Str::ucfirst($product->name)}}" class="form-control col-md-10" placeholder="Tên món ăn"/>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="control-label col-md-3 col-sm-3 ">Hình ảnh</label>
                                 <div class="col-md-9 col-sm-9 ">
-                                    <input type="file" name="image" id="autocomplete-custom-append" class="form-control col-md-10"/>
+                                    <input type="file" name="image" id="autocomplete-custom-append" class="form-control col-md-10"/> 
+                                    <img style="width:100px; height:80px" src="{{asset('uploads/products/'. $product->image)}}" alt="image">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="control-label col-md-3 col-sm-3 ">Giá</label>
                                 <div class="col-md-9 col-sm-9 ">
-                                    <input type="text" name="price" id="autocomplete-custom-append" class="form-control col-md-10" placeholder="Giá tiền" />
+                                    <input type="text" name="price" id="autocomplete-custom-append" value="{{$product->price}}" class="form-control col-md-10" placeholder="Giá tiền" />
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="control-label col-md-3 col-sm-3 ">Hiển thị</label>
                                 <div class="col-md-1 col-sm-1 ">
                                     <select class="form-control" name="status">
-                                        <option select value="1">Hiện</option>
-                                        <option  value="0">Ẩn</option>
+                                        <option @if($product->status === 1) {{'selected'}} @endif value="1">Hiện</option>
+                                        <option @if($product->status === 0) {{'selected'}} @endif value="0">Ẩn</option>
                                     </select>
                                 </div>
                             </div>
@@ -64,11 +66,18 @@
                                 <label class="col-md-3 col-sm-3  control-label">Ngày bán
                                 </label>
                                 <div class="col-md-9 col-sm-9 ">
-                                @foreach ($dates as $date)
+                                    @foreach ($dates as $date)
                                     <div class="form-check form-switch">
-                                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" name="date[{{$date->id}}]" value="{{$date->id}}"> {{Str::ucfirst($date->name)}}
+                                        <input
+                                            @foreach ($product->date as $date2)
+                                                @if ($date->id === $date2->id)
+                                                    {{'checked'}}
+                                                @endif
+                                            @endforeach
+                                        
+                                         class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" name="date[{{$date->id}}]" value="{{$date->id}}"> {{Str::ucfirst($date->name)}}
                                     </div>
-                                @endforeach
+                                    @endforeach
                                 </div>
                             </div>
                             <div class="ln_solid"></div>

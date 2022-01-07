@@ -24,8 +24,8 @@
                     <li>
                         <a><i class="fa fa-home"></i> Món <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
-                            <li><a href="{{route('getAddProduct')}}">Thêm</a></li>
-                            <li><a href="{{route('getListProduct')}}">Danh sách</a></li>
+                            <li><a href="{{route('product.create')}}">Thêm</a></li>
+                            <li><a href="{{route('product.index')}}">Danh sách</a></li>
                         </ul>
                     </li>
                 </ul>

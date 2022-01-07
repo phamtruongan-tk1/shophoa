@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginAdminController;
 use App\Http\Controllers\ProductController;
+use App\Http\Middleware\CheckLogin;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,18 +18,23 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::prefix('admin')->group(function () {
-    Route::get('/', [LoginAdminController::class, 'loginAdmin'])->name('getLoginAdmin');
+Route::group(['prefix'=>'admin'], function() {
+    Route::get('/', [LoginAdminController::class, 'loginAdmin'])->name('getLoginAdmin')->middleware('checkLogin');
     Route::post('/', [LoginAdminController::class, 'postLoginAdmin'])->name('postLoginAdmin');
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-
-    Route::prefix('product')->group(function () {
-         Route::get('add', [ProductController::class, 'create'])->name('getAddProduct');
-         Route::post('add', [ProductController::class, 'store'])->name('postAddProduct');
-         Route::get('list', [ProductController::class, 'index'])->name('getListProduct');
+    Route::get('/logout', [LoginAdminController::class, 'logoutAdmin'])->name('logoutAdmin')->middleware('checkLogout');
+    
+    Route::group([
+        'prefix'=>'product',
+        'as'=>'product.',
+        'middleware' => 'checkLogout'
+    ], function() {
+        Route::get('add', [ProductController::class, 'create'])->name('create');
+        Route::post('add', [ProductController::class, 'store'])->name('store');
+        Route::get('list', [ProductController::class, 'index'])->name('index');
+        Route::get('{id}/edit', [ProductController::class, 'edit'])->name('edit');
+        Route::put('edit/{id}', [ProductController::class, 'update'])->name('update');
+        Route::delete('delete/{id}', [ProductController::class, 'destroy'])->name('destroy');
     });
 });
+
+Route::get('/', [HomeController::class, 'index']);

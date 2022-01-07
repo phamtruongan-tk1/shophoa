@@ -4,10 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Symfony\Component\CssSelector\Node\FunctionNode;
 
 class Product extends Model
 {
+    use SoftDeletes;
+    
     public $timestamps = true;
     protected $table = 'products';
 
@@ -21,9 +24,9 @@ class Product extends Model
         'updated_at'
     ];
 
-    public function date ()
+    public function date()
     {
-        return $this->belongsToMany(Date::class, 'date_products', 'product_id', 'date_id');
+        return $this->belongsToMany(Date::class, 'date_product', 'product_id', 'date_id');
     }
 
 }

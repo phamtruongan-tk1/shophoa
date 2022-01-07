@@ -1,10 +1,17 @@
 @extends('admin.master')
 @section('content')
+<style>
+    .w-5.h-5 {
+        width:20px
+    }
+    
+</style>
+
 <div class="right_col" role="main">
     <div class="">
         <div class="page-title">
             <div class="title_left">
-                <h3>Tables</h3>
+                <h3></h3>
             </div>
             <div class="title_right">
                 <div class="col-md-5 col-sm-5   form-group pull-right top_search">
@@ -22,7 +29,7 @@
             <div class="col-md-12 col-sm-12  ">
                 <div class="x_panel">
                     <div class="x_title">
-                        <h2>Table design</h2>
+                        <h2>Danh sách món ăn</h2>
                         <div class="clearfix"></div>
                     </div>
                     <div class="x_content">
@@ -43,7 +50,7 @@
                                     <tr class="even pointer">
                                         <td class=" ">{{Str::ucfirst($product->name)}}</td>
                                         <td class=" ">
-                                            <img src="public/uploads/products/{{$product->image}}">
+                                            <img style="width:100px; height:80px" src="{{asset('uploads/products/'. $product->image)}}" alt="image">
                                         </td>
                                         <td class=" ">{{number_format($product->price)}}</td>
                                         <td class=" ">
@@ -59,13 +66,18 @@
                                             @endforeach
                                         </td>
                                         <td class=" ">
-                                            <a class="fas fa-edit btn btn-warning btn-sm "></a>
-                                            <a class="fas fa-trash-alt btn-success btn-sm "></a>
+                                            <a href="{{route('product.edit', $product->id)}}" class="fas fa-edit btn btn-warning btn-sm "></a>
+                                            <form action="{{route('product.destroy', $product->id)}}" method="POST" class="d-inline" >
+                                                @csrf
+                                                @method('DELETE')
+                                                <button  onclick="return confirm('Bạn có muốn xóa món ăn')" class="btn btn-danger btn-sm" ><i class="far fa-trash-alt"></i></button>
+                                            </form>
                                         </td>
                                     </tr>
                                 @endforeach
                                 </tbody>
                             </table>
+                            {{$products->links()}}
                         </div>
                     </div>
                 </div>

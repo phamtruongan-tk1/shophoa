@@ -17,9 +17,9 @@ class Date extends Model
         'updated_at'
     ];
 
-    public function product ()
+    public function product()
     {
-        return $this->belongsToMany(Product::class, 'date_products', 'date_id', 'product_id');
+        return $this->belongsToMany(Product::class, 'date_product', 'date_id', 'product_id');
     }
 
 }

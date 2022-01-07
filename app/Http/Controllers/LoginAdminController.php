@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use PhpParser\Node\Expr\FuncCall;
 
 class LoginAdminController extends Controller
 {
@@ -22,10 +23,16 @@ class LoginAdminController extends Controller
         ];
 
         if (Auth::attempt($admin)) {
-            return Redirect::route('dashboard');
+            return Redirect::route('product.index');
         } else {
             session()->put('message', 'Thông tin đăng nhập không chính xác');
-            return Redirect::route('getLoginAdmin');
+            return Redirect::route('product.getLoginAdmin');
         }
+    }
+
+    public function logoutAdmin ()
+    {
+        Auth::logout();
+        return Redirect::route('getLoginAdmin');
     }
 }

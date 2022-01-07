@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Date_product extends Model
 {
-    protected $table = 'date_products';
+    protected $table = 'date_product';
 
     protected $fillable = [
         'id',
