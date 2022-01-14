@@ -25,6 +25,23 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        $arrPermission = [
+                    'product-index',
+                    'product-store',
+                    'product-update',
+                    'product-delete',
+                    'user-index',
+                    'user-store',
+                    'user-update',
+                    'user-delete',
+                    'role-managerment',
+                ];
+
+        foreach ($arrPermission as $permission) {
+            Gate::define($permission, function($user) use ($permission) {
+                return $user->authorize($permission);
+            });
+        }
+        
     }
 }

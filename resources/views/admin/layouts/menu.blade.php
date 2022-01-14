@@ -22,10 +22,40 @@
                 <h3>General</h3>
                 <ul class="nav side-menu">
                     <li>
+                        @canany(['product-index','product-store'])
                         <a><i class="fa fa-home"></i> Món <span class="fa fa-chevron-down"></span></a>
+                        @endcanany
+
                         <ul class="nav child_menu">
+
+                            @can('product-store')
                             <li><a href="{{route('product.create')}}">Thêm</a></li>
+                            @endcan
+
+                            @can('product-index')
                             <li><a href="{{route('product.index')}}">Danh sách</a></li>
+                            @endcan
+
+                        </ul>
+                    </li>
+                    {{-- <li>
+                        <a href="{{route('date.index')}}"><i class="fa fa-home"></i> Quản lý món theo ngày </a>
+                    </li> --}}
+                    <li>
+                        @canany(['user-index','role-managerment'])
+                        <a><i class="fa fa-home"></i> User <span class="fa fa-chevron-down"></span></a>
+                        @endcanany
+
+                        <ul class="nav child_menu">
+
+                            @can('user-index')
+                            <li><a href="{{route('user.index')}}">Quản lý user </a></li>
+                            @endcan
+
+                            @can('role-managerment')
+                            <li><a href="{{route('role.index')}}">Phân quyền</a></li>
+                            @endcan
+
                         </ul>
                     </li>
                 </ul>

@@ -9,6 +9,10 @@ use PhpParser\Node\Expr\FuncCall;
 
 class LoginAdminController extends Controller
 {
+    public function dashboard()
+    {
+        return view('admin.pages.dashboard');
+    } 
     public function loginAdmin()
     {
         return view('admin.login');
@@ -19,14 +23,13 @@ class LoginAdminController extends Controller
         $admin = [
             'name' => $request->name,
             'password' => $request->password,
-            'level' => 1
         ];
 
         if (Auth::attempt($admin)) {
-            return Redirect::route('product.index');
+            return Redirect::route('dashboard');
         } else {
             session()->put('message', 'Thông tin đăng nhập không chính xác');
-            return Redirect::route('product.getLoginAdmin');
+            return Redirect::route('getLoginAdmin');
         }
     }
 

@@ -41,4 +41,23 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class);
+    }
+
+    public function authorize($checkPermission)
+    {
+        $roles = auth()->user()->roles;
+        foreach ($roles as $role) {
+            $permissions = $role->permissions;
+
+            if ($permissions->contains('name', $checkPermission)) { 
+                return true;
+            }
+        }
+        return false;
+    }
+
 }

@@ -19,7 +19,7 @@ class CheckLogin
     public function handle(Request $request, Closure $next)
     {
         if (Auth::check()) {
-            return Redirect::route('product.index');
+            return Redirect::route('dashboard');
         }
         return $next($request);
     }
