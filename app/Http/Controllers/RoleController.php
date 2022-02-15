@@ -45,7 +45,7 @@ class RoleController extends Controller
     {
         $role_name = $request->name;
         $permissions = $request->permission;
-        
+
         $role = new Role();
         $role->name = $role_name;
         $role->save();
@@ -94,7 +94,7 @@ class RoleController extends Controller
         $roleName = $request->name;
         $permissions = $request->permission;
         $roleById = Role::find($id);
-        
+
         if ($roleName !== $roleById->name) {
             $roleByName = Role::where('name', $roleName)->first();
 
@@ -121,6 +121,5 @@ class RoleController extends Controller
         Role::find($id)->delete();
         session()->put('message', 'Đã xóa vai trò');
         return Redirect::back();
-
     }
 }

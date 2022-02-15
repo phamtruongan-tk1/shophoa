@@ -18,7 +18,7 @@ class ProductController extends Controller
     public function create()
     {
         $dates = Date::all();
-        return view('admin.pages.add-product',[
+        return view('admin.pages.add-product', [
             'dates' => $dates
         ]);
     }
@@ -37,7 +37,7 @@ class ProductController extends Controller
         $productId = $product->id;
         $dates = $request->date;
         Product::find($productId)->date()->attach($dates);
-       
+
         session()->put('message', 'Đã thêm món ăn');
         return Redirect::back();
     }
@@ -45,7 +45,7 @@ class ProductController extends Controller
     public function index()
     {
         $products = Product::orderBy('id', 'desc')->paginate(10);
-        return view('admin.pages.list-product',[
+        return view('admin.pages.list-product', [
             'products' => $products
         ]);
     }
@@ -54,17 +54,17 @@ class ProductController extends Controller
     {
         $product = Product::find($id);
         $dates = Date::all();
-        return view('admin.pages.edit-product',[
+        return view('admin.pages.edit-product', [
             'product' => $product,
             'dates' => $dates
         ]);
     }
 
     public function update(Request $request, $id)
-    {   
+    {
         $dates = $request->date;
         $productById = Product::find($id);
-        
+
         if (!$request->image) {
             $image = $productById->image;
         } else {
@@ -81,12 +81,13 @@ class ProductController extends Controller
 
             if ($productByName) {
                 session()->put('message', 'Tên món ăn đã bị trùng');
-                return Redirect::back();die();
+                return Redirect::back();
+                die();
             }
             $input['name'] = $request->name;
             $input['image'] = $image;
             $input['price'] = $request->price;
-            $input['status'] = $request->status; 
+            $input['status'] = $request->status;
         }
         $productById->update($input);
         $productById->date()->sync($dates);

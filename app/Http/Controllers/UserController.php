@@ -19,10 +19,10 @@ class UserController extends Controller
     {
         $roles = Role::all();
         $users = User::all();
-    return view('admin.pages.user', [
-        'roles' => $roles,
-        'users' => $users
-    ]);
+        return view('admin.pages.user', [
+            'roles' => $roles,
+            'users' => $users
+        ]);
     }
 
     /**

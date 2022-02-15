@@ -12,13 +12,13 @@ class LoginAdminController extends Controller
     public function dashboard()
     {
         return view('admin.pages.dashboard');
-    } 
+    }
     public function loginAdmin()
     {
         return view('admin.login');
     }
 
-    public function postLoginAdmin (Request $request)
+    public function postLoginAdmin(Request $request)
     {
         $admin = [
             'name' => $request->name,
@@ -33,7 +33,7 @@ class LoginAdminController extends Controller
         }
     }
 
-    public function logoutAdmin ()
+    public function logoutAdmin()
     {
         Auth::logout();
         return Redirect::route('getLoginAdmin');
